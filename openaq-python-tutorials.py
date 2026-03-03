@@ -34,7 +34,7 @@ def _(mo):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(f"""
-    In this tutorial, we will go over the most common use and workflow of using OpenAQ API via its Python SDK. Each topic, sometimes accompanied by one or more problems, will cover a workflow that serves as the building block for the next topics and attemps to serve those problems. **By the end of the tutorial, you will learn to:**
+    In this tutorial, we will go over the most common use and workflow of using OpenAQ API via its Python SDK. Each topic, sometimes accompanied by one or more problems, will cover a workflow that serves as the building block for the next topics and attemps to solve those problems. **By the end of the tutorial, you will learn to:**
     - Set up your OpenAQ client in Python to access the API programmatically
     - Use the [OpenAQ Python documentation](https://openaq.github.io/openaq-python/) to help you work with the resources
     - Understand and use the most common resources: Locations, Sensors, and Measurements
@@ -233,11 +233,6 @@ def _(mo):
     mo.md(r"""
     By traversing its attributes, we can answer both Q2-1 and Q2-2, and in addition learning another interesting high-level information about air monitoring in Ghana: what pollutants are being measured and how many locations are there readings for each available on OpenAQ?
     """)
-    return
-
-
-@app.cell
-def _():
     return
 
 
