@@ -353,8 +353,8 @@ def _(mo):
     mo.md(r"""
     ## **Topic 4: Measurements data and evaluate sensor summary statistic**
     Measurements data is often the end goal for accessing OpenAQ API for many. You can do this via the OpenAQ Python package in a number of ways:
-    1. Accessing the latest measurements at a location: using the `.latest()` method of the Locations resource with a `locations_id`
-    2. Accessing measurements data by the sensor that records it: using the `.list()` method of the Measurements resource with a `sensors_id`
+    1. Accessing the **latest measurements at a location**: using the `.latest()` method of the Locations resource with a `locations_id`
+    2. Accessing **measurements data by the sensor** that records it: using the `.list()` method of the Measurements resource with a `sensors_id`
     """)
     return
 
