@@ -55,7 +55,7 @@ def _(mo):
     mo.md(r"""
     ## **Topic 1: Configure the client**
     The first step to every workflow using OpenAQ API via our Python SDK is to configure the client with your uniquely assigned OpenAQ API key.
-    - **Your API key should be known to and used by you and should not be shared with anyone**. To honor that, this tutorial uses an environment configuration widget to hide personal API key credentials behind a cell's UI.
+    - **Your API key should be known to and used only by you and should not be shared with anyone**. To honor that, this tutorial uses an environment configuration widget to hide personal API key credentials behind a cell's UI.
     - There are 2 ways to configure an OpenAQ client: (1) opening and explicitly closing a connection and (2) using a context manager to handle closing automatically. **Option (1) works best for notebooks and Python REPL tools.**
     """)
     return
@@ -91,7 +91,6 @@ def _(mo):
 
 @app.cell
 def _(configure_env):
-    # Remember to hit Enter twice
     configure_env
     return
 
@@ -103,12 +102,6 @@ def _(configure_env):
         configure_env.require_valid()
     else:
         print("Your OpenAQ API key has been successfully saved as an environment variable. You can proceed with the tutorials.")
-    return
-
-
-@app.cell
-def _(configure_env):
-    configure_env.value
     return
 
 
