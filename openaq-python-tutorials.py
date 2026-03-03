@@ -5,7 +5,9 @@
 #     "marimo>=0.19.9",
 #     "openaq==1.0.0rc2",
 #     "pandas==3.0.1",
-#     "wigglystuff==0.2.34"
+#     "wigglystuff==0.2.34",
+#     "vegafusion>=2.0.3",
+#     "vl-convert-python>=1.8.0"
 # ]
 # ///
 
@@ -64,6 +66,7 @@ def _():
     import marimo as mo
     import pandas as pd
     import altair as alt
+    import vegafusion
     from openaq import OpenAQ
     from wigglystuff import EnvConfig
     from datetime import datetime
@@ -252,7 +255,7 @@ def _(ghana_locations):
                 ghana_parameters_dict[sensor.parameter.name] += 1
 
     print(f"The parameters and the number of locations where they are being measured in Ghana are:\n\t{ghana_parameters_dict}")
-    return (sensor,)
+    return
 
 
 @app.cell(hide_code=True)
@@ -412,14 +415,14 @@ def _(mo):
 
 
 @app.cell
-def _(client, ghana_locations, sensor):
+def _(client, ghana_locations):
     ghana_pm25_sensors = {}
 
     for ghana_location in ghana_locations.results:
         sensors = client.locations.sensors(ghana_location.id)
         for each_sensor in sensors.results:
             if each_sensor.parameter.id == 2:
-                ghana_pm25_sensors[ghana_location.id] = sensor.id
+                ghana_pm25_sensors[ghana_location.id] = each_sensor.id
                 break
 
     # We got 60 PM2.5 sensors, which align with Q2-2 results
@@ -815,7 +818,7 @@ def _(alt, summary_stats_full_2025):
         alt.Color('data_label:N', scale=alt.Scale(domain=q6_categories, range=q6_color_mapping), title=None),
         tooltip=["data_label", "coverage", "average"],
     ).configure_view(
-        step=20,
+        step=22,
         strokeWidth=0
     ).configure_axis(
         domain=False
