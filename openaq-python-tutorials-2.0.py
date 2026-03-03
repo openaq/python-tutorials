@@ -22,22 +22,54 @@ app = marimo.App(
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    Introduction here
-    Each topic
+    # **OpenAQ Python SDK tutorials**
+    """)
+    return
 
-    Outside of marimo -> pip install 1-5 packages
-    pip install openaq==1.0.0rc2
+
+@app.cell(hide_code=True)
+def _():
+    tutorials_info = {
+        "openaq_version": "1.0.0rc2",
+        "last_updated": "2026-03-03"
+    }
+    return (tutorials_info,)
+
+
+@app.cell(hide_code=True)
+def _(mo, tutorials_info):
+    mo.md(f"""
+    In this tutorial, we will go over the most common use and workflow of using OpenAQ API via its Python SDK. Each topic, sometimes accompanied by one or more problems, will cover a workflow that serves as the building block for the next topics and attemps to serve those problems. **By the end of the tutorial, you will learn to:**
+    - Set up your OpenAQ client in Python to access the API programmatically
+    - Understand and use the most common resources: Locations, Sensors, and Measurements
+    - Incorporate OpenAQ Python in your data analysis and visualization pipeline
+    - Utilize the API to solve problems for your air quality needs.
+
+    **Before starting this tutorial:**
+    1. Make sure that you have the latest version of OpenAQ Python SDK installed: **{tutorials_info["openaq_version"]}**
+        - **If you're on molab:** Click on the box icon (Manage packages) on the sidebar on the left of your molab window
+        - **If you're running the tutorials locally:** run `pip install openaq==1.0.0rc2` on your CLI and run `pip show openaq` once the PC finishes downloading to ensure it is installed correctly. You might also need to install `pandas`, `altair`, and `wigglystuff` to get the notebook to work also.
+
+    2. Make sure that you have an OpenAQ API key readily accessible. If you don't yet have an API key, you can [register for an account](explore.openaq.org/register) and access you API key via [OpenAQ Explorer account settings page](explore.openaq.org/account).
+
+    3. Make sure you are familiar with Python syntax and basic data structures. The tutorial chooses pandas and altair for manipulating and visualizing the data. It is helplful to know them to follow along, but not necessary if you already use other packages for the same purpose and just need to learn how to use the OpenAQ Python SDK.
+
+    **To use this tutorial, you can:**
+    - Run each cell and go through them one by one, or,
+    - Run all the cells at once and then go through them. Note that there will be an error at first prompting you to input your OpenAQ API key before the rest could be run.
+
+    _This tutorial is designed and maintained by [Minh Nghiem](https://github.com/mngh037). All feedbacks to make this better are welcome and appreciated. Last updated: {tutorials_info["last_updated"]}._
     """)
     return
 
 
 @app.cell
 def _():
+    import os
+    import warnings
     import marimo as mo
     import pandas as pd
     import altair as alt
-    import os
-    import warnings
     from wigglystuff import EnvConfig
     from datetime import datetime
     from pprint import pprint
