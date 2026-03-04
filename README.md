@@ -16,9 +16,11 @@ If you go with Option 2 and use marimo:
 5. The notebook will automatically open in your browser with all required dependencies.
 
 For your reference, the notebook makes use of these packages that you'll need to install on a non-marimo deployment:
-```altair==6.0.0
+```
+altair==6.0.0
 openaq==1.0.0rc2
 pandas==3.0.1
 wigglystuff==0.2.34
 vegafusion>=2.0.3
-vl-convert-python>=1.8.0```
+vl-convert-python>=1.8.0
+```
