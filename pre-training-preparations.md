@@ -14,7 +14,7 @@ We will be sharing our screen and walk you through the tutorials during the trai
 
 1. **A molab account.** If you do not have one, create yours with [this link](molab) and click on "Sign in" at the top right corner. molab is a cloud-hosted interactive notebook accessible from the web (think Google Colab, but better). You can read more about molab [here](https://marimo.io/blog/announcing-molab).
 
-2. **Your OpenAQ API key.** If you have registered for an account during your OpenAQ Explorer training session, log in using this link and go to your profile settings. Your API key will be at the bottom of the page. 
-    - If you don't have an OpenAQ (or OpenAQ Explorer) account, you can sign up for one [here](https://explore.openaq.org/register).
+2. **Your OpenAQ API key.** If you have registered for an account during your OpenAQ Explorer training session, [log in using this link](https://explore.openaq.org/login?) and go to your profile settings. Your API key will be at the bottom of the page. 
+    - If you don't have an OpenAQ (or OpenAQ Explorer) account, you can [sign up for one here](https://explore.openaq.org/register).
 
 To ensure we can make the most of our time at training, **no setup troubleshooting will be done during the training session**. Please let us know ahead of time if you have any issues.
