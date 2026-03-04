@@ -1,0 +1,131 @@
+---
+title: "OpenAQ Python Training"
+author: "Minh Nghiem"
+format:
+    revealjs:
+        slide-number: true
+        logo: images/openaq-logo.png
+
+include-in-header:
+  - text: |
+      <style>
+      .reveal .slide-logo {
+        max-height: unset;
+        height: 200px;
+      }
+      </style>
+---
+
+## About the Python SDK
+- Part of our core tech products
+- Allows you to connect to our API and programmatically access air quality data hosted on OpenAQ platform
+- Latest version: **1.0.0rc2**
+
+---
+
+## Why use the Python SDK?
+- Accessing air quality data in bulk, from any location and any time
+- User-friendly helpers: expressive error handling, preemptive error catching, automatic rate limiting
+- More intuitive data access: Python objects-oriented instead of API json responses
+- Fully typed: autocomplete, inline documentation
+
+---
+
+## Data models {.smaller}
+![](images/data-models.png){width="880px" height="500px"}
+
+For a full definition of each resource, visit our [Python documentation website](https://openaq.github.io/openaq-python/).
+
+
+# Key concepts
+
+## API key
+
+The OpenAQ API uses API keys to authenticate requests and manage access. 
+
+- control usage and enforce rate limits
+- unique and can be requested anew to each users.
+
+::: {.callout-important}
+Do not share your API key with anyone.
+:::
+
+## Rate limiting {.smaller}
+Our API limits users' usage at:
+
+- 60 requests/minute
+- 2,000 requests/hour
+
+::: {.callout-note}
+From v1.0.0rc1, our Python package supports automatic rate limiting.
+:::
+
+::: {.callout-tip}
+If a rate limit is exceeded, the API returns a 429 “Too many requests” HTTP status code. Avoid making more requests during this time to prevent further errors.
+:::
+
+::: {.callout-warning}
+Exceeding API rate limits repeatedly can lead to either a temporary or permanent ban from the OpenAQ API.
+:::
+
+## Pagination {.smaller}
+
+- By default, a request will return a maximum of 100 results a page. This is adjustable and can be set up to 1,000 results per page using `limit=1000`. 
+
+- If a request returns more than 1,000 results, you can loop through the pages until no more data is found.
+
+::: {.callout-tip}
+Querying the entire dataset and paging can be slow. Adding constraints will help your requests be more performative, especially for volume-intensive resources like Measurements.
+:::
+
+``` {python}
+{
+    "meta": {
+        "name": "openaq-api",
+        "website": "/",
+        "page": 1,
+        "limit": 1000,
+        "found": ">1000"
+    }
+}
+```
+
+# Tutorials
+
+---
+
+## Overview {.smaller}
+
+The tutorial is exercises-driven and works as a primer to OpenAQ Python SDK.
+
+- **Goals:**
+    - Client setup and accessing key resources programmatically
+    - Identifying errors and self-troubleshooting
+    - Introduction to using the documentation
+    - Getting measurements data
+    - Integrating with data manipulation tools
+    - Presenting findings using visualization tools
+
+## Setting up
+
+- [Sign up](https://molab.marimo.io) for a molab account
+- [Register for an OpenAQ account](https://explore.openaq.org/register) and have your OpenAQ API key ready
+
+## Let's start {.smaller}
+
+**Step 1:** Go to [this link]() to create a notebook session for this tutorials
+
+**Step 2:** Once you're in the link:
+
+- Click “Fork and Run” at the top of the page. You will be prompted to log in to your molab account if you’re currently logged out.
+- Once you have logged in, you will be automatically redirected to your own forked version of the notebook on the web.
+- The notebook is yours to play with and will also be accessible to you via your molab homepage.
+
+---
+
+## Useful links
+- [OpenAQ Python SDK documentation](https://openaq.github.io/openaq-python/) (WIP)
+- [OpenAQ API documentation](https://docs.openaq.org/)
+- [OpenAQ Explorer](https://explore.openaq.org/#1.2/20/40)
+- Join [OpenAQ slack channel](https://openaq.slack.com/join/shared_invite/zt-3ga21nbn9-GIFP2NfNTdS0I9OMuKUEbw#/shared-invite/email) for questions and discussions anything air data
+
