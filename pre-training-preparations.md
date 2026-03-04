@@ -2,12 +2,17 @@
 
 For this training, you should be familiar with Python syntax and data structures. We’ll also use external tools like pandas and altair for data manipulation and visualization. Knowledge of them is helpful, but not strictly required for basic use of the OpenAQ Python SDK.
 
-We will be sharing our screen and walk you through the tutorials during the training. However, if you want to follow along and run the code yourself on your computer, you should prepare **before** the training by completing the following tasks:
+Training Agenda:
+- Overview of the OpenAQ Python SDK (10 minutes)
+- Setting up the notebook on your computer (5 minutes)
+- OpenAQ Python SDK tutorials (35 minutes)
+- Q&As (10 minutes)
 
-1. [Create an account for molab](https://molab.marimo.io) if you do not have one. molab is a cloud-hosted interactive notebook accessible from the web (think Google Colab, but better). Read more about molab here.
+We will be sharing our screen and walk you through the tutorials during the training. **(Optional)** If you want to follow along and run the code yourself on your computer, ensure that you have these ready by the time the training:
 
-2. [Sign up for an OpenAQ account to retrieve your personal API key](https://explore.openaq.org/register). Once you successfully register and log in, go to your profile settings. Your API key will be at the bottom of the page.
+1. **A molab account.** If you do not have one, create yours with [this link](molab) and click on "Sign in" at the top right corner. molab is a cloud-hosted interactive notebook accessible from the web (think Google Colab, but better). You can read more about molab [here](https://marimo.io/blog/announcing-molab).
 
-3. [should we include this or walk them thru this step during the training?] Go to [this link](https://molab.marimo.io/notebooks/nb_DxGqUB7xr4E7F2hgeAWris). At the top of the page, click “Fork and Run”. You will be prompted to log in to your molab account if you’re currently logged out. Once you have forked the notebook, you will be automatically redirected to your own forked version of the notebook on the web. It will also be accessible to you via your molab homepage.
+2. **Your OpenAQ API key.** If you have registered for an account during your OpenAQ Explorer training session, log in using this link and go to your profile settings. Your API key will be at the bottom of the page. 
+    - If you don't have an OpenAQ (or OpenAQ Explorer) account, you can sign up for one [here](https://explore.openaq.org/register).
 
 To ensure we can make the most of our time at training, **no setup troubleshooting will be done during the training session**. Please let us know ahead of time if you have any issues.
