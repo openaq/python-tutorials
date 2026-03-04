@@ -8,9 +8,7 @@ For this training, you should be familiar with Python syntax and data structures
 - OpenAQ Python SDK tutorials (35 minutes)
 - Q&As (10 minutes)
 
-We will be sharing our screen and walk you through the tutorials during the training. 
-
-**(Optional)** If you want to follow along and run the code yourself on your computer, ensure that you have these ready by the time the training:
+We will be sharing our screen and walk you through the tutorials during the training. **(Optional)** If you want to follow along and run the code yourself on your computer, ensure that you have these ready by the time the training:
 
 1. **A molab account.** If you do not have one, create yours with [this link](molab) and click on "Sign in" at the top right corner. molab is a cloud-hosted interactive notebook accessible from the web (think Google Colab, but better). You can read more about molab [here](https://marimo.io/blog/announcing-molab).
 
