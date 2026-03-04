@@ -26,7 +26,7 @@ def _(mo):
     mo.md(r"""
     # **OpenAQ Python SDK tutorials**
     - **OpenAQ Python SDK version:** 1.0.0rc2
-    - **Last updated:** 2026-03-03
+    - **Last updated:** 2026-03-04
     """)
     return
 
@@ -112,7 +112,7 @@ def _(EnvConfig, mo):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    To use the tutorial, you must run the cell below, enter you valid OpenAQ API key in the box that pops up, and hit Enter. [Don't have an API key? Get yours by registering for an account here.](explore.openaq.org/register)
+    **To proceed with the tutorial, you must run the cell below, enter you valid OpenAQ API key in the box that pops up, and hit Enter.** [Don't have an API key? Get yours by registering for an account here.](explore.openaq.org/register)
     """)
     return
 
