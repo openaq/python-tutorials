@@ -7,13 +7,14 @@
 #     "pandas==3.0.1",
 #     "wigglystuff==0.2.34",
 #     "vegafusion>=2.0.3",
-#     "vl-convert-python>=1.8.0"
+#     "vl-convert-python>=1.8.0",
+#     "pyarrow==23.0.1",
 # ]
 # ///
 
 import marimo
 
-__generated_with = "0.18.4"
+__generated_with = "0.20.4"
 app = marimo.App(
     width="medium",
     css_file="/usr/local/_marimo/custom.css",
@@ -26,7 +27,7 @@ def _(mo):
     mo.md(r"""
     # **OpenAQ Python SDK tutorials**
     - **OpenAQ Python SDK version:** 1.0.0rc2
-    - **Last updated:** 2026-03-04
+    - **Last updated:** 2026-03-11
     """)
     return
 
@@ -38,7 +39,7 @@ def _(mo):
     - Set up your OpenAQ client in Python to access the API programmatically
     - Use the [OpenAQ Python documentation](https://openaq.github.io/openaq-python/) to help you work with the resources
     - Understand and use the most common resources: Locations, Sensors, and Measurements
-    - Integrate OpenAQ Python in your data analysis and visualization pipeline
+    - Integrate OpenAQ Python SDK in your data analysis and visualization pipeline
     - Utilize the API to solve problems for your air quality needs.
 
     **Before starting this tutorial, make sure that:**
@@ -145,6 +146,8 @@ def _(mo):
 def _(OpenAQ, configure_env):
     # Remember to explicitly close the client connection at the end of your notebook session with `client.close()`
     client = OpenAQ(api_key=configure_env.value["variables"][0]["value"])
+
+    # Example request to the API
     client.locations.get(42)
     return (client,)
 
@@ -172,7 +175,7 @@ def _(mo):
 def _(client, pprint):
     # The .get() method of the Locations resource fetches information about one location
     sample_location = client.locations.get(42)
-    pprint(sample_location.headers) # Rate limiting is handled automatically in openaq==1.0.0rc and above
+    pprint(sample_location.meta) # Rate limiting is handled automatically in openaq==1.0.0rc and above
     return
 
 
@@ -278,7 +281,7 @@ def _():
 def _(mo):
     mo.md(r"""
     ### **Geospatial queries**
-    The `.list()` method also allows you to perform spatial queries to look for locations. These spatial argument options are particularly useful for geographic queries of sub-national level. Note that coordinates must be in the format WGS84 (EPSG:4326).
+    The `.list()` method also allows you to perform spatial queries to look for locations. These spatial argument options are particularly useful for geographic queries of sub-national level, as we want to answer Q2-3. Note that coordinates must be in the format WGS84 (EPSG:4326).
     """)
     return
 
@@ -287,7 +290,7 @@ def _(mo):
 def _(client):
     # Bounding box: http://bboxfinder.com/
     accra_locations_bbox = client.locations.list(
-        bbox=(-0.271464, 5.513141, -0.131388, 5.600960), # minX, minY, maxX, maxY
+        bbox=(-0.271464, 5.513141, -0.131388, 5.600960), # minX, minY, maxX, maxY (X: longitude, Y: latitude)
         limit=1000
     )
 
@@ -352,7 +355,7 @@ def _(ghana_locations, pprint):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    ## **Topic 4: Measurements data and evaluate sensor summary statistic**
+    ## **Topic 4: Measurements data & evaluate sensor summary statistic**
     Measurements data is often the end goal for accessing OpenAQ API for many. You can do this via the OpenAQ Python package in a number of ways:
     1. Accessing the **latest measurements at a location**: using the `.latest()` method of the Locations resource with a `locations_id`
     2. Accessing **measurements data by the sensor** that records it: using the `.list()` method of the Measurements resource with a `sensors_id`
@@ -380,7 +383,7 @@ def _(mo):
     mo.md(r"""
     But as you can see, that method gives you only data from a single point in time. By using the `.list()` method of the Measurements resource, however, you can access measurements data of various base calculations from any given period. This request below provides raw measurements data in the last week of December 2025 for sensor 10330994.
 
-    **Note:** It is recommended you add constraints in your request to the API, such as `datetime_from` and `datetime_to`, to avoid resource-intensive resoures that would cause request timeout errors.
+    **Note:** It is recommended you add constraints in your request to the API when querying for measurements data, such as `datetime_from` and `datetime_to`, or using `hours` or above data, to avoid resource-intensive resoures that would cause request timeout errors.
     """)
     return
 
@@ -399,7 +402,7 @@ def list_measurements_example(client, datetime, pprint):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    ### Evaluating summary statistics
+    ### **Evaluating summary statistics**
     But a lot of the time, raw measurements at a 5-minute frequency are unnecessary for many analysis tasks. In this section, we will look at summary statistics to identify outliers and/or poorly performing locations in your dataset. In other words, we will answer these questions:
     - **Q4-1.** Using days data for 2025, what are the outliers and unstably performing locations for PM2.5 in Ghana?
     - **Q4-2.** Visualize the median, min, max, interquartile range, and coverage for 3 locations for PM2.5 in Ghana.
@@ -452,6 +455,7 @@ def _(client, ghana_pm25_sensors, pd):
                                                                 date_to="2025-12-31")
 
         if ghana_pm25_days_measurements.meta.found > 0:
+            # Fill measurement results of this sensor in a pandas DataFrame
             summary_stats_df = pd.json_normalize(ghana_pm25_days_measurements.dict()["results"])
 
             summary_stats_df = summary_stats_df.rename(columns={
@@ -610,6 +614,7 @@ def _(alt, summary_stats_full_2025):
         ).resolve_scale(x='shared')
 
         return final_chart
+
     return (visualize_summary_stats_2025,)
 
 
@@ -711,7 +716,7 @@ def _(mo):
 
 @app.cell
 def _(not_great_locations, summary_stats_full_2025):
-    # Annual average PM2.5 conc. at each locations (excluding < 75% coverage days)
+    # Annual average PM2.5 conc. at each locations
     all_coverage_2025 = summary_stats_full_2025[
         ~summary_stats_full_2025.isin(not_great_locations)].groupby("locations_id")["average"].mean().reset_index()
 
@@ -777,7 +782,8 @@ def _(all_coverage_2025, alt, over_75_coverage_2025, pd):
 def _(mo):
     mo.md(r"""
     ## **Topic 6: Visualize a year of PM2.5 data at a location**
-    Now that we have the building blocks done, let's bring it all together and try one final task of comparing PM2.5 daily average for the whole year against WHO recommendation (24-hour average exposures should not exceed 15 µg/m3 more than 3-4 days per year).
+    Now that we have the building blocks done, let's bring it all together with one final task:
+    - **Q6.** Compare PM2.5 daily average for the whole year at a location against WHO recommendation (24-hour average exposures should not exceed 15 µg/m3 more than 3-4 days per year).
     """)
     return
 

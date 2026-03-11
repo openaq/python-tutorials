@@ -37,6 +37,12 @@ include-in-header:
 For a full definition of each resource, visit our [Python documentation website](https://openaq.github.io/openaq-python/).
 
 
+## Data models {.smaller}
+![](images/data-models-highlight.png){width="880px" height="500px"}
+
+For a full definition of each resource, visit our [Python documentation website](https://openaq.github.io/openaq-python/).
+
+
 # Key concepts
 
 ## API key
@@ -96,24 +102,18 @@ Querying the entire dataset and paging can be slow. Adding constraints will help
 
 ## Overview {.smaller}
 
-The tutorial is exercises-driven and works as a primer to OpenAQ Python SDK.
+The tutorial is exercises-driven and works as a primer to OpenAQ Python SDK. Having the code run on your machine as we go is encouraged but entirely optional.
 
-- **Goals:**
-    - Client setup and accessing key resources programmatically
-    - Identifying errors and self-troubleshooting
-    - Introduction to using the documentation
-    - Getting measurements data
-    - Integrating with data manipulation tools
-    - Presenting findings using visualization tools
+<br>
 
-## Setting up
+#### If you want to run the code on your computer as you follow along, make sure you have:
 
-- [Sign up](https://molab.marimo.io) for a molab account
-- [Register for an OpenAQ account](https://explore.openaq.org/register) and have your OpenAQ API key ready
+- A [molab account](https://molab.marimo.io)
+- Your own [OpenAQ API key](https://explore.openaq.org/register)
 
 ## Let's start {.smaller}
 
-**Step 1:** Go to [this link]() to create a notebook session for this tutorials
+**Step 1:** Go to [this link](https://molab.marimo.io/notebooks/nb_ZKWukmCxii1C4ymqq8j8ZV) to create a notebook session for this tutorials
 
 **Step 2:** Once you're in the link:
 
