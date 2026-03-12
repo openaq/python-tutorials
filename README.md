@@ -1,9 +1,11 @@
 # OpenAQ Python SDK tutorial
 
-This repo contains the tutorial for using OpenAQ Python SDK for users new to the package. The tutorial is exercises-driven and works as a primer to OpenAQ Python SDK. The SDK is used in this tutorial as the data fetcher for a data exploratory/analysis pipeline in Python.
+This repo contains the tutorial for using OpenAQ Python SDK for users new to the package with familiarity with Python syntax and data structures. The tutorial is exercises-driven and works as a primer to OpenAQ Python SDK. The SDK is used in this tutorial as the data fetcher for a data exploratory/analysis pipeline in Python.
+
+## Using the tutorial
 
 The tutorial is a .py file made with marimo that is best used in a notebook environment. There are 2 ways you can access the tutorial:
-- **Option 1 (recommended):** Fork and run the notebook on molab using this link.
+- **Option 1 (recommended):** Fork and run the notebook on molab using [this link](https://molab.marimo.io/notebooks/nb_ZKWukmCxii1C4ymqq8j8ZV).
 - **Option 2:** Clone this repo and run the notebook locally on your computer using marimo or any Python notebooks of your choice.
 
 Option 1 is straightforward: you only need to create a molab account to access and run the notebook on your own molab session.
@@ -15,12 +17,17 @@ If you go with Option 2 and use marimo:
 4. In the terminal, a message will ask if you want to run the notebook in a sandboxed virtual environment with the notebook's dependencies. Type `y` for yes.
 5. The notebook will automatically open in your browser with all required dependencies.
 
-For your reference, the notebook makes use of these packages that you'll need to install on a non-marimo deployment:
+For your reference, the notebook makes use of these packages that you'll need to manually install on a non-marimo deployment:
 ```
-altair==6.0.0
-openaq==1.0.0rc2
-pandas==3.0.1
-wigglystuff==0.2.34
-vegafusion>=2.0.3
-vl-convert-python>=1.8.0
+altair==6.0.0,
+marimo>=0.19.9,
+openaq==1.0.0rc2,
+pandas==3.0.1,
+wigglystuff==0.2.34,
+vegafusion>=2.0.3,
+vl-convert-python>=1.8.0,
+pyarrow==23.0.1
 ```
+
+## Licenses
+All content, including source code and markdowns, in the tutorial file is licensed CC BY-SA 4.0, found at [license-content](https://github.com/openaq/python-tutorials/blob/main/license-content.md).
