@@ -146,10 +146,14 @@ def _(mo):
 def _(OpenAQ, configure_env):
     # Remember to explicitly close the client connection at the end of your notebook session with `client.close()`
     client = OpenAQ(api_key=configure_env.value["variables"][0]["value"])
+    return (client,)
 
+
+@app.cell
+def _(client):
     # Example request to the API
     client.locations.get(42)
-    return (client,)
+    return
 
 
 @app.cell(disabled=True)
@@ -175,7 +179,7 @@ def _(mo):
 def _(client, pprint):
     # The .get() method of the Locations resource fetches information about one location
     sample_location = client.locations.get(42)
-    pprint(sample_location.meta) # Rate limiting is handled automatically in openaq==1.0.0rc and above
+    pprint(sample_location.meta.found) # Rate limiting is handled automatically in openaq==1.0.0rc and above
     return
 
 
@@ -290,7 +294,7 @@ def _(mo):
 def _(client):
     # Bounding box: http://bboxfinder.com/
     accra_locations_bbox = client.locations.list(
-        bbox=(-0.271464, 5.513141, -0.131388, 5.600960), # minX, minY, maxX, maxY (X: longitude, Y: latitude)
+        bbox=(-0.236850,5.524323,-0.166984,5.572676), # minX, minY, maxX, maxY (X: longitude, Y: latitude)
         limit=1000
     )
 
@@ -302,7 +306,7 @@ def _(client):
 def _(client):
     # Coordinates and radius (must go together)
     accra_locations_radius = client.locations.list(
-        coordinates=(5.556031, -0.204461), # Y, X
+        coordinates=(5.553796,-0.253416), # Y, X
         radius=10000, # in meters
         limit=1000
     )
@@ -331,8 +335,8 @@ def _(mo):
 
 
 @app.cell
-def _(pprint):
-    sensors_quiz = 'TODO'
+def _(client, pprint):
+    sensors_quiz = client.locations.sensors(3025594)
     pprint(sensors_quiz)
     return
 
@@ -383,7 +387,7 @@ def _(mo):
     mo.md(r"""
     But as you can see, that method gives you only data from a single point in time. By using the `.list()` method of the Measurements resource, however, you can access measurements data of various base calculations from any given period. This request below provides raw measurements data in the last week of December 2025 for sensor 10330994.
 
-    **Note:** It is recommended you add constraints in your request to the API when querying for measurements data, such as `datetime_from` and `datetime_to`, or using `hours` or above data, to avoid resource-intensive resoures that would cause request timeout errors.
+    **Note:** It is recommended you add constraints in your request to the API when querying for measurements data, such as `datetime_from` and `datetime_to`, or using `hours` or above data, to avoid resource-intensive requests that would cause request timeout errors.
     """)
     return
 
@@ -509,6 +513,12 @@ def _(pd, summary_stats):
 
     summary_stats_full_2025
     return (summary_stats_full_2025,)
+
+
+@app.cell
+def _(summary_stats_full_2025):
+    summary_stats_full_2025.to_csv("data.csv")
+    return
 
 
 @app.cell(hide_code=True)
@@ -842,8 +852,8 @@ def _(mo):
 
 
 @app.cell
-def _():
-    # client.close()
+def _(client):
+    client.close()
     return
 
 
