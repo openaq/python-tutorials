@@ -47,9 +47,9 @@ def _(mo):
         - **If you're on molab:** Click on the box icon (Manage packages) on the sidebar on the left of your molab window
         - **If you're running the tutorials locally and not using marimo notebooks:** run `pip install openaq==1.0.0rc2` on your CLI and run `pip show openaq` once the PC finishes downloading to ensure it is installed correctly. You might also need to install `pandas`, `altair`, `vegafusion`, and `wigglystuff` to get the notebook to work on a non-marimo local deployment.
 
-    2. You have your OpenAQ API key ready. If you don't yet have an API key, you can [register for an account](explore.openaq.org/register) and access you API key via [OpenAQ Explorer account settings page](explore.openaq.org/account).
+    2. **You have your OpenAQ API key ready**. If you don't yet have an API key, you can [register for an account](explore.openaq.org/register) and access you API key via [OpenAQ Explorer account settings page](explore.openaq.org/account).
 
-    3. You are familiar with Python syntax and basic data structures. The tutorial chooses pandas and altair for manipulating and visualizing the data. It is helplful to know them to follow along, but not necessary if you already use other packages for the same purpose and just need to learn how to use the OpenAQ Python SDK.
+    3. **You are familiar with Python syntax and basic data structures**. The tutorial chooses pandas and altair for manipulating and visualizing the data. It is helplful to know them to follow along, but not necessary if you already use other packages for the same purpose and just need to learn how to use the OpenAQ Python SDK.
 
     **To use this tutorial, you can:**
     - Run each cell and go through them one by one, or,
