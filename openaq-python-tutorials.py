@@ -14,7 +14,7 @@
 
 import marimo
 
-__generated_with = "0.20.4"
+__generated_with = "0.18.4"
 app = marimo.App(
     width="medium",
     css_file="/usr/local/_marimo/custom.css",
@@ -44,7 +44,7 @@ def _(mo):
 
     **Before starting this tutorial, make sure that:**
     1. You have the latest version of OpenAQ Python SDK installed: **1.0.0rc2**
-        - **If you're on molab:** Click on the box icon (Manage packages) on the sidebar on the left of your molab window
+        - **If you're on molab:** Click on the box icon (Manage packages) on the sidebar on the left of your molab window. Type in `openaq==1.0.0v2` to install.
         - **If you're running the tutorials locally and not using marimo notebooks:** run `pip install openaq==1.0.0rc2` on your CLI and run `pip show openaq` once the PC finishes downloading to ensure it is installed correctly. You might also need to install `pandas`, `altair`, `vegafusion`, and `wigglystuff` to get the notebook to work on a non-marimo local deployment.
 
     2. **You have your OpenAQ API key ready**. If you don't yet have an API key, you can [register for an account](explore.openaq.org/register) and access you API key via [OpenAQ Explorer account settings page](explore.openaq.org/account).
@@ -624,7 +624,6 @@ def _(alt, summary_stats_full_2025):
         ).resolve_scale(x='shared')
 
         return final_chart
-
     return (visualize_summary_stats_2025,)
 
 
