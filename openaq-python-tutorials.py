@@ -3,7 +3,7 @@
 # dependencies = [
 #     "altair==6.0.0",
 #     "marimo>=0.19.9",
-#     "openaq==1.0.0rc2",
+#     "openaq==1.0.0rc4",
 #     "pandas==3.0.1",
 #     "wigglystuff==0.2.34",
 #     "vegafusion>=2.0.3",
@@ -26,8 +26,8 @@ app = marimo.App(
 def _(mo):
     mo.md(r"""
     # **OpenAQ Python SDK tutorials**
-    - **OpenAQ Python SDK version:** 1.0.0rc2
-    - **Last updated:** 2026-03-11
+    - **OpenAQ Python SDK version:** 1.0.0rc4
+    - **Last updated:** 2026-06-12
     """)
     return
 
@@ -43,7 +43,7 @@ def _(mo):
     - Utilize the API to solve problems for your air quality needs.
 
     **Before starting this tutorial, make sure that:**
-    1. You have the latest version of OpenAQ Python SDK installed: **1.0.0rc2**
+    1. **You have the latest version of OpenAQ Python SDK** installed: **1.0.0rc4**
         - **If you're on molab:** Click on the box icon (Manage packages) on the sidebar on the left of your molab window. Type in `openaq==1.0.0v2` to install.
         - **If you're running the tutorials locally and not using marimo notebooks:** run `pip install openaq==1.0.0rc2` on your CLI and run `pip show openaq` once the PC finishes downloading to ensure it is installed correctly. You might also need to install `pandas`, `altair`, `vegafusion`, and `wigglystuff` to get the notebook to work on a non-marimo local deployment.
 
@@ -77,6 +77,14 @@ def _():
     warnings.filterwarnings("ignore")
     alt.data_transformers.enable("vegafusion")
     return EnvConfig, OpenAQ, alt, datetime, mo, pd, pprint
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    # PART I: Intro to key resources
+    """)
+    return
 
 
 @app.cell(hide_code=True)
@@ -312,7 +320,7 @@ def _(client):
     )
 
     print(f"{accra_locations_radius.meta.found} locations are found on OpenAQ in Accra using coordinates and radius around city center")
-    return
+    return (accra_locations_radius,)
 
 
 @app.cell(hide_code=True)
@@ -359,7 +367,7 @@ def _(ghana_locations, pprint):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    ## **Topic 4: Measurements data & evaluate sensor summary statistic**
+    ## **Topic 4: Measurements data**
     Measurements data is often the end goal for accessing OpenAQ API for many. You can do this via the OpenAQ Python package in a number of ways:
     1. Accessing the **latest measurements at a location**: using the `.latest()` method of the Locations resource with a `locations_id`
     2. Accessing **measurements data by the sensor** that records it: using the `.list()` method of the Measurements resource with a `sensors_id`
@@ -370,7 +378,6 @@ def _(mo):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    ### **Accessing measurements data**
     If you are designing an application to report real-time pollutant concentrations or calculate the AQI from those concentrations at a location, using the `.latest()` method of the Locations resource may be useful.
     """)
     return
@@ -406,10 +413,18 @@ def list_measurements_example(client, datetime, pprint):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    ### **Evaluating summary statistics**
+    # PART II: Data evaluation & visualization
+    """)
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    ## **Topic 5: Evaluating summary statistics**
     But a lot of the time, raw measurements at a 5-minute frequency are unnecessary for many analysis tasks. In this section, we will look at summary statistics to identify outliers and/or poorly performing locations in your dataset. In other words, we will answer these questions:
-    - **Q4-1.** Using days data for 2025, what are the outliers and unstably performing locations for PM2.5 in Ghana?
-    - **Q4-2.** Visualize the median, min, max, interquartile range, and coverage for 3 locations for PM2.5 in Ghana.
+    - **Q5-1.** Using days data for 2025, what are the outliers and unstably performing locations for PM2.5 in Accra?
+    - **Q5-2.** Visualize the median, min, max, interquartile range, and coverage for 3 locations for PM2.5 in Accra.
     """)
     return
 
@@ -423,19 +438,19 @@ def _(mo):
 
 
 @app.cell
-def _(client, ghana_locations):
-    ghana_pm25_sensors = {}
+def _(accra_locations_radius, client):
+    accra_pm25_sensors = {}
 
-    for ghana_location in ghana_locations.results:
-        sensors = client.locations.sensors(ghana_location.id)
+    for accra_location in accra_locations_radius.results:
+        sensors = client.locations.sensors(accra_location.id)
         for each_sensor in sensors.results:
             if each_sensor.parameter.id == 2:
-                ghana_pm25_sensors[ghana_location.id] = each_sensor.id
+                accra_pm25_sensors[accra_location.id] = each_sensor.id
                 break
 
-    # We got 60 PM2.5 sensors, which align with Q2-2 results
-    len(ghana_pm25_sensors)
-    return (ghana_pm25_sensors,)
+    # We got 14 PM2.5 sensors, meaning all 47 stations found in Accra with the radius method above have a PM2.5 sensor
+    len(accra_pm25_sensors)
+    return (accra_pm25_sensors,)
 
 
 @app.cell(hide_code=True)
@@ -447,20 +462,20 @@ def _(mo):
 
 
 @app.cell
-def _(client, ghana_pm25_sensors, pd):
+def _(accra_pm25_sensors, client, pd):
     summary_stats_dfs = []
 
     # Iterate through each sensor, look for measurements data and save them to a DataFrame
-    for locations_id, sensors_id in ghana_pm25_sensors.items():
+    for locations_id, sensors_id in accra_pm25_sensors.items():
         # Quiz: What are the differences between this request and this cell: #scrollTo=list_measurements_example
-        ghana_pm25_days_measurements = client.measurements.list(sensors_id=sensors_id,
+        accra_pm25_days_measurements = client.measurements.list(sensors_id=sensors_id,
                                                                 data="days", # pre-aggregated days data from hourly data
                                                                 date_from="2025-01-01",
                                                                 date_to="2025-12-31")
 
-        if ghana_pm25_days_measurements.meta.found > 0:
+        if accra_pm25_days_measurements.meta.found > 0:
             # Fill measurement results of this sensor in a pandas DataFrame
-            summary_stats_df = pd.json_normalize(ghana_pm25_days_measurements.dict()["results"])
+            summary_stats_df = pd.json_normalize(accra_pm25_days_measurements.dict()["results"])
 
             summary_stats_df = summary_stats_df.rename(columns={
                 "summary.median": "median",
@@ -524,7 +539,7 @@ def _(summary_stats_full_2025):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    There are many ways to tackle Q4-1. Here, let's use the daily median of all sensors for 2025 and explore their summary statistics to see what each location looks like using a boxplot chart.
+    There are many ways to tackle Q5-1. Here, let's use the daily median of all sensors for 2025 and explore their summary statistics to see what each location looks like using a boxplot chart.
     """)
     return
 
@@ -541,37 +556,33 @@ def _(alt, summary_stats_full_2025):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    Now, two locations stand out with massive outliers in their data. Realistically, location 2453501 might not be so bad if that max value is just one day. But for this exercise, let's just drop those 2 locations to examine the rest in the same boxplot chart.
+    Now, these measurements seem high but are all within possible range. Without looking in too much detail, we can assume here these locations seem fine to proceed.
+    """)
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    **Quiz: **What are some interpretations looking at this boxplot? Any information you wish you knew that would help with the interpretations?
     """)
     return
 
 
 @app.cell
-def summary_stats_boxplot(alt, summary_stats):
-    not_great_locations = [9764, 2453501]
-
-    alt.Chart(summary_stats).mark_boxplot(extent="min-max").encode(
-        alt.Y("median:Q").scale(zero=False),
-        alt.X("locations_id:N"),
-        alt.Tooltip("count():Q")
-    ).transform_filter(
-        ~alt.FieldOneOfPredicate(field='locations_id', oneOf=not_great_locations)
-    )
-    return (not_great_locations,)
-
-
-@app.cell(hide_code=True)
-def _(mo):
-    mo.md(r"""
-    **Quiz: **What are some interpretations looking at these 2 boxplots? Any information you wish you knew that would help with the interpretations?
-    """)
+def _():
+    # alt.Chart(summary_stats).mark_boxplot(extent="min-max").encode(
+    #     alt.Y("median:Q").scale(zero=False),
+    #     alt.X("locations_id:N"),
+    #     alt.Tooltip("count():Q")
+    # )
     return
 
 
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    Now that we know which locations seem problematic, let's visualize what individual stations look like the entire year to further investigate the trend.
+    Now that we have checked for potential outliers, let's visualize what individual stations look like the entire year to further investigate the trend.
     """)
     return
 
@@ -641,17 +652,17 @@ def _(visualize_summary_stats_2025):
 
 @app.cell
 def _(visualize_summary_stats_2025):
-    visualize_summary_stats_2025(6109067)
+    visualize_summary_stats_2025(3025580)
     return
 
 
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    ## **Topic 5: Evaluate sensor coverage for time period of interest**
+    ## **Topic 6: Evaluate sensor coverage for time period of interest**
     Coverage is accessible via the Measurement() object whenever a Measurements resource is called. From the visualizations above, we have a hint of how coverage might be important in aggregation. This section describes one of the ways coverage might be used in analysis by answering these questions:
-    - **Q5-1.** What’s the annual average PM2.5 concentration at each station (assume the annual average is computed from daily averages)? WHO suggests that annual average concentrations of PM2.5 should not exceed 5 µg/m3.
-    - **Q5-2.** What if we include only days with >=75% coverage?
+    - **Q6-1.** What’s the annual average PM2.5 concentration at each station (assume the annual average is computed from daily averages)? WHO suggests that annual average concentrations of PM2.5 should not exceed 5 µg/m3.
+    - **Q6-2.** What if we include only days with >=75% coverage?
     """)
     return
 
@@ -718,16 +729,15 @@ def _(client):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    Now, let's answer Q5-1. Since we have already created a DataFrame `summary_stats_full_2025` with days measurement data from Topic 4, let's use that data.
+    Now, let's answer Q6-1. Since we have already created a DataFrame `summary_stats_full_2025` with days measurement data from Topic 4, let's use that data.
     """)
     return
 
 
 @app.cell
-def _(not_great_locations, summary_stats_full_2025):
+def _(summary_stats_full_2025):
     # Annual average PM2.5 conc. at each locations
-    all_coverage_2025 = summary_stats_full_2025[
-        ~summary_stats_full_2025.isin(not_great_locations)].groupby("locations_id")["average"].mean().reset_index()
+    all_coverage_2025 = summary_stats_full_2025.groupby("locations_id")["average"].mean().reset_index()
 
     all_coverage_2025
     return (all_coverage_2025,)
@@ -736,17 +746,16 @@ def _(not_great_locations, summary_stats_full_2025):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    As we have seen in the prior charts, monitors can be spotty and these calculations so far do not take into account the coverage metric. For Q5-2., let's do these calculations again, but this time we will exclude days that do not have >= 75% coverage.
+    As we have seen in the prior charts, monitors can be spotty and these calculations so far do not take into account the coverage metric. For Q6-2., let's do these calculations again, but this time we will exclude days that do not have >= 75% coverage.
     """)
     return
 
 
 @app.cell
-def _(not_great_locations, summary_stats_full_2025):
+def _(summary_stats_full_2025):
     # Annual average PM2.5 conc. at each locations (excluding < 75% coverage days)
-    over_75_coverage_2025 = summary_stats_full_2025[
-        (~summary_stats_full_2025["locations_id"].isin(not_great_locations)) & 
-        (summary_stats_full_2025["coverage"] >= 75)
+    over_75_coverage_2025 = summary_stats_full_2025[ 
+        summary_stats_full_2025["coverage"] >= 75
     ].groupby("locations_id")["average"].mean().reset_index()
 
     over_75_coverage_2025
@@ -790,9 +799,9 @@ def _(all_coverage_2025, alt, over_75_coverage_2025, pd):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    ## **Topic 6: Visualize a year of PM2.5 data at a location**
+    ## **Topic 7: Visualize a year of PM2.5 data at a location**
     Now that we have the building blocks done, let's bring it all together with one final task:
-    - **Q6.** Compare PM2.5 daily average for the whole year at a location against WHO recommendation (24-hour average exposures should not exceed 15 µg/m3 more than 3-4 days per year).
+    - **Q7.** Compare PM2.5 daily average for the whole year at a location against WHO recommendation (24-hour average exposures should not exceed 15 µg/m3 more than 3-4 days per year).
     """)
     return
 
@@ -851,8 +860,8 @@ def _(mo):
 
 
 @app.cell
-def _(client):
-    client.close()
+def _():
+    # client.close()
     return
 
 

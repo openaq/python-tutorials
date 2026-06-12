@@ -16,10 +16,22 @@ include-in-header:
       </style>
 ---
 
+## Today's agenda (session I)
+- Ice-breaking activity (10 mins)
+- Overview of the OpenAQ Python SDK (10 mins)
+- Setting up the notebook on your computer (10 mins)
+- OpenAQ Python SDK tutorials part I: Intro to key resources (20 mins)
+- Q&As (10 mins)
+
+# Ice-breaking
+(using your phone is recommended for this activity!)
+
+---
+
 ## About the Python SDK
 - Part of our core tech products
 - Allows you to connect to our API and programmatically access air quality data hosted on OpenAQ platform
-- Latest version: **1.0.0rc2**
+- Latest version: **1.0.0rc4**
 
 ---
 
@@ -102,11 +114,11 @@ Querying the entire dataset and paging can be slow. Adding constraints will help
 
 ## Overview {.smaller}
 
-The tutorial is exercises-driven and works as a primer to OpenAQ Python SDK. Having the code run on your machine as we go is encouraged but entirely optional.
+The tutorial is exercises-driven and works as a primer to OpenAQ Python SDK. Having the code run on your machine as we go is encouraged but optional.
 
 <br>
 
-#### If you want to run the code on your computer as you follow along, make sure you have:
+#### If you want to run the code on your computer as you follow along, by now you should have:
 
 - A [molab account](https://molab.marimo.io)
 - Your own [OpenAQ API key](https://explore.openaq.org/register)
@@ -124,8 +136,8 @@ The tutorial is exercises-driven and works as a primer to OpenAQ Python SDK. Hav
 ---
 
 ## Useful links
-- [OpenAQ Python SDK documentation](https://openaq.github.io/openaq-python/) (WIP)
+- [OpenAQ Python SDK documentation](https://openaq.github.io/openaq-python/)
 - [OpenAQ API documentation](https://docs.openaq.org/)
 - [OpenAQ Explorer](https://explore.openaq.org/#1.2/20/40)
-- Join [OpenAQ slack channel](https://openaq.slack.com/join/shared_invite/zt-3ga21nbn9-GIFP2NfNTdS0I9OMuKUEbw#/shared-invite/email) for questions and discussions anything air data
+- Join [OpenAQ slack channel](https://openaq.slack.com/join/shared_invite/zt-3ga21nbn9-GIFP2NfNTdS0I9OMuKUEbw#/shared-invite/email) for questions and discussions anything air quality
 
