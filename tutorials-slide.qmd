@@ -31,7 +31,7 @@ include-in-header:
 ## About the Python SDK
 - Part of our core tech products
 - Allows you to connect to our API and programmatically access air quality data hosted on OpenAQ platform
-- Latest version: **1.0.0rc4**
+- Latest version: **1.0.3**
 
 ---
 
@@ -78,14 +78,6 @@ Our API limits users' usage at:
 From v1.0.0rc1, our Python package supports automatic rate limiting.
 :::
 
-::: {.callout-tip}
-If a rate limit is exceeded, the API returns a 429 “Too many requests” HTTP status code. Avoid making more requests during this time to prevent further errors.
-:::
-
-::: {.callout-warning}
-Exceeding API rate limits repeatedly can lead to either a temporary or permanent ban from the OpenAQ API.
-:::
-
 ## Pagination {.smaller}
 
 - By default, a request will return a maximum of 100 results a page. This is adjustable and can be set up to 1,000 results per page using `limit=1000`. 
@@ -125,11 +117,11 @@ The tutorial is exercises-driven and works as a primer to OpenAQ Python SDK. Hav
 
 ## Let's start {.smaller}
 
-**Step 1:** Go to [this link](https://molab.marimo.io/notebooks/nb_ZKWukmCxii1C4ymqq8j8ZV) to create a notebook session for this tutorials
+**Step 1:** Go to [this link](https://molab.marimo.io/notebooks/nb_XGx4FKHVwT8EgnDFeJh9mD) to create a notebook session for this tutorials
 
 **Step 2:** Once you're in the link:
 
-- Click “Fork and Run” at the top of the page. You will be prompted to log in to your molab account if you’re currently logged out.
+- Click “Fork” at the top of the page. You will be prompted to log in to your molab account if you’re currently logged out.
 - Once you have logged in, you will be automatically redirected to your own forked version of the notebook on the web.
 - The notebook is yours to play with and will also be accessible to you via your molab homepage.
 

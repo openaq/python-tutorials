@@ -44,7 +44,7 @@ def _(mo):
 
     **Before starting this tutorial, make sure that:**
     1. **You have the latest version of OpenAQ Python SDK** installed: **1.0.3**
-        - **If you're on molab:** You should already have it. Click on the box icon (Manage packages) on the sidebar on the left of your molab window and scroll to `openaq` to make sure it's 1.0.3x.
+        - **If you're on molab:** You should already have it. Click on the box icon (Manage packages) on the sidebar on the left of your molab window and scroll to `openaq` to make sure it's 1.0.3.
         - **If you're running the tutorials locally and not using marimo notebooks:** run `pip install openaq==1.0.3` on your CLI and run `pip show openaq` once the PC finishes downloading to ensure it is installed correctly. You might also need to install `pandas`, `altair`, `vegafusion`, and `wigglystuff` to get the notebook to work on a non-marimo local deployment.
 
     2. **You have your OpenAQ API key ready**. If you don't yet have an API key, you can [register for an account](explore.openaq.org/register) and access you API key via [OpenAQ Explorer account settings page](explore.openaq.org/account).
