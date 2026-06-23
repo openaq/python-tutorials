@@ -3,7 +3,7 @@
 # dependencies = [
 #     "altair==6.0.0",
 #     "marimo>=0.19.9",
-#     "openaq==1.0.0rc4",
+#     "openaq==1.0.3",
 #     "pandas==3.0.1",
 #     "wigglystuff==0.2.34",
 #     "vegafusion>=2.0.3",
@@ -26,8 +26,8 @@ app = marimo.App(
 def _(mo):
     mo.md(r"""
     # **OpenAQ Python SDK tutorials**
-    - **OpenAQ Python SDK version:** 1.0.0rc4
-    - **Last updated:** 2026-06-12
+    - **OpenAQ Python SDK version:** 1.0.3
+    - **Last updated:** 2026-06-22
     """)
     return
 
@@ -43,9 +43,9 @@ def _(mo):
     - Utilize the API to solve problems for your air quality needs.
 
     **Before starting this tutorial, make sure that:**
-    1. **You have the latest version of OpenAQ Python SDK** installed: **1.0.0rc4**
-        - **If you're on molab:** Click on the box icon (Manage packages) on the sidebar on the left of your molab window. Type in `openaq==1.0.0v2` to install.
-        - **If you're running the tutorials locally and not using marimo notebooks:** run `pip install openaq==1.0.0rc2` on your CLI and run `pip show openaq` once the PC finishes downloading to ensure it is installed correctly. You might also need to install `pandas`, `altair`, `vegafusion`, and `wigglystuff` to get the notebook to work on a non-marimo local deployment.
+    1. **You have the latest version of OpenAQ Python SDK** installed: **1.0.3**
+        - **If you're on molab:** Click on the box icon (Manage packages) on the sidebar on the left of your molab window. Type in `openaq==1.0.3` to install.
+        - **If you're running the tutorials locally and not using marimo notebooks:** run `pip install openaq==1.0.3` on your CLI and run `pip show openaq` once the PC finishes downloading to ensure it is installed correctly. You might also need to install `pandas`, `altair`, `vegafusion`, and `wigglystuff` to get the notebook to work on a non-marimo local deployment.
 
     2. **You have your OpenAQ API key ready**. If you don't yet have an API key, you can [register for an account](explore.openaq.org/register) and access you API key via [OpenAQ Explorer account settings page](explore.openaq.org/account).
 
@@ -71,7 +71,7 @@ def _():
     import vegafusion
     from openaq import OpenAQ
     from wigglystuff import EnvConfig
-    from datetime import datetime
+    from datetime import datetime, date
     from pprint import pprint
 
     warnings.filterwarnings("ignore")
@@ -100,7 +100,7 @@ def _(mo):
 
 @app.cell
 def _(EnvConfig, mo):
-    # Create an environment configuration widget with a simple checker for OpenAQ API key input. Do not modify.
+    # Create an environment configuration widget with a simple check for OpenAQ API key input. DO NOT MODIFY THIS CELL.
     def validate_key(api_key):
         """
         Check if key has 64 characters as auto-generated.
@@ -134,7 +134,7 @@ def _(configure_env):
 
 @app.cell
 def _(configure_env):
-    # Run simple validation check for valid API key input. Do not modify.
+    # Run simple validation check for valid API key input. DO NOT MODIFY THIS CELL.
     if not configure_env.all_valid:
         configure_env.require_valid()
     else:
@@ -152,7 +152,6 @@ def _(mo):
 
 @app.cell
 def _(OpenAQ, configure_env):
-    # Remember to explicitly close the client connection at the end of your notebook session with `client.close()`
     client = OpenAQ(api_key=configure_env.value["variables"][0]["value"])
     return (client,)
 
@@ -224,8 +223,8 @@ def _(mo):
 @app.cell
 def _(client):
     # List of countries' alpha-2 ISO and countries_id: https://docs.openaq.org/resources/countries
-    ghana_locations = client.locations.list(iso="GH")
-    client.locations.list(countries_id=152)
+    ghana_locations = client.locations.list(iso="GH", limit=1000)
+    client.locations.list(countries_id=152, limit=1000)
     return (ghana_locations,)
 
 
@@ -246,7 +245,7 @@ def _(ghana_locations, pprint):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    By traversing its attributes, we can answer both Q2-1 and Q2-2, and in addition learning another interesting high-level information about air monitoring in Ghana: what pollutants are being measured and how many locations are there readings for each available on OpenAQ?
+    By traversing its attributes, we can answer both **Q2-1** and **Q2-2**, and in addition learning another interesting high-level information about air monitoring in Ghana: what pollutants are being measured and how many locations are there readings for each available on OpenAQ?
     """)
     return
 
@@ -277,13 +276,14 @@ def _(ghana_locations):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    **Quiz:** Can you alternatively answer Q2-2 with one single request to the API, knowing that the parameters_id for PM2.5 is 2? Replace the 'TODO' string in the cell below to print out the number of PM2.5 locations in Ghana.
+    **Quiz 1:** Can you alternatively answer Q2-2 with one single request to the API, knowing that the parameters_id for PM2.5 is 2? Replace the 'TODO' string in the cell below to print out the number of PM2.5 locations in Ghana.
     """)
     return
 
 
 @app.cell
 def _():
+    # Hint: review the Locations resource documentation
     ghana_pm25_locations_quiz = 'TODO'
     ghana_pm25_locations_quiz
     return
@@ -292,8 +292,23 @@ def _():
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
+    **Quiz 2**: How many air quality monitoring stations are there in your country that are on OpenAQ?
+    """)
+    return
+
+
+@app.cell
+def _():
+    homecountry_locations_quiz = 'TODO'
+    homecountry_locations_quiz
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
     ### **Geospatial queries**
-    The `.list()` method also allows you to perform spatial queries to look for locations. These spatial argument options are particularly useful for geographic queries of sub-national level, as we want to answer Q2-3. Note that coordinates must be in the format WGS84 (EPSG:4326).
+    The `.list()` method also allows you to perform spatial queries to look for locations. These spatial argument options are particularly useful for geographic queries of sub-national level, as we want to answer **Q2-3**. Note that coordinates must be in the format WGS84 (EPSG:4326).
     """)
     return
 
@@ -326,6 +341,21 @@ def _(client):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
+    **Quiz 3**: Using one of the 2 geospatial queries above, how many PM2.5-monitoring stations are there in your hometown/city that are on OpenAQ? The ID for PM2.5 within OpenAQ database is 2.
+    """)
+    return
+
+
+@app.cell
+def _():
+    hometown_pm25_locations_quiz = 'TODO'
+    hometown_pm25_locations_quiz
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
     ## **Topic 3: Get sensor_ids from locations**
     Each location have one or more sensoring units (called sensors) that record measurements of pollutant or meteorological paramerers, such as PM2.5, PM10, temperature. These sensors are the gateway to getting measurements at locations and are not to be confused with air sensors (location type).
 
@@ -337,14 +367,14 @@ def _(mo):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    **Quiz:** What are the sensors_ids from the locations with ID 3025594? Replace the 'TODO' with a single request to the API.
+    **Quiz 4:** What are the sensors_ids from the locations with ID 3025594? Replace the 'TODO' with a single request to the API.
     """)
     return
 
 
 @app.cell
-def _(client, pprint):
-    sensors_quiz = client.locations.sensors(3025594)
+def _(pprint):
+    sensors_quiz = "TODO"
     pprint(sensors_quiz)
     return
 
@@ -352,7 +382,7 @@ def _(client, pprint):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    **Quiz: **As you might have noticed, we could also traverse the LocationsResponse body and get the sensors ID. Can you tell the difference between using `.list()` and traversing vs. using `.sensors()`?
+    **Quiz 5: **As you might have noticed, we could also traverse the LocationsResponse body and get the sensors ID. From the results, can you tell the difference between using `.list()` and traversing vs. using `.sensors()`?
     """)
     return
 
@@ -413,6 +443,21 @@ def list_measurements_example(client, datetime, pprint):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
+    **Quiz 6**: Can you find the 2025 average measurements of PM2.5 at one station in your home country? Alternatively, you can choose any one station in Ghana. Feel free to approach this however you want (using one or multiple cells is fine)
+    """)
+    return
+
+
+@app.cell
+def _():
+    # Use this cell to answer Quiz 6
+
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
     # PART II: Data evaluation & visualization
     """)
     return
@@ -432,7 +477,7 @@ def _(mo):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    First, we need to get all sensors_ids that measure PM2.5 for all locations in Ghana.
+    First, we need to get all sensors_ids that measure PM2.5 for all locations in Accra.
     """)
     return
 
@@ -448,7 +493,7 @@ def _(accra_locations_radius, client):
                 accra_pm25_sensors[accra_location.id] = each_sensor.id
                 break
 
-    # We got 14 PM2.5 sensors, meaning all 47 stations found in Accra with the radius method above have a PM2.5 sensor
+    # We got 48 PM2.5 sensors, meaning all 48 stations found in Accra with the radius method above have a PM2.5 sensor
     len(accra_pm25_sensors)
     return (accra_pm25_sensors,)
 
@@ -467,9 +512,8 @@ def _(accra_pm25_sensors, client, pd):
 
     # Iterate through each sensor, look for measurements data and save them to a DataFrame
     for locations_id, sensors_id in accra_pm25_sensors.items():
-        # Quiz: What are the differences between this request and this cell: #scrollTo=list_measurements_example
         accra_pm25_days_measurements = client.measurements.list(sensors_id=sensors_id,
-                                                                data="days", # pre-aggregated days data from hourly data
+                                                                data="days", # pre-aggregated days data from hourly
                                                                 date_from="2025-01-01",
                                                                 date_to="2025-12-31")
 
@@ -505,6 +549,7 @@ def _(accra_pm25_sensors, client, pd):
 
 @app.cell
 def _(summary_stats):
+    # Coverage of 100% and None values for measurements mean the source either transmits an error code or reports null (different from no data transmission) 
     summary_stats
     return
 
@@ -512,7 +557,7 @@ def _(summary_stats):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    Because days where data is not available will not be returned by the API in the `summary_stats` table, we need to create a grid of 2025 days for each `locations_id` and `pm25_sensors_id` pair and populate them with N/A values. **This new DataFrame will be the key data table to be used through the rest of the tutorials.**
+    Because days where there's no data reporting will not be returned by the API in the `summary_stats` table, we need to create a grid of 2025 days for each `locations_id` and `pm25_sensors_id` pair and populate them with N/A values. **This new DataFrame will be the key data table to be used through the rest of the tutorials.**
     """)
     return
 
@@ -539,7 +584,7 @@ def _(summary_stats_full_2025):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    There are many ways to tackle Q5-1. Here, let's use the daily median of all sensors for 2025 and explore their summary statistics to see what each location looks like using a boxplot chart.
+    There are many ways to tackle **Q5-1**. Here, let's use the daily median of all sensors for 2025 and explore their summary statistics to see what each location looks like using a boxplot chart.
     """)
     return
 
@@ -564,18 +609,25 @@ def _(mo):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    **Quiz: **What are some interpretations looking at this boxplot? Any information you wish you knew that would help with the interpretations?
+    **Quiz 7: **What are some interpretations looking at this boxplot? Any information you wish you knew that would help with the interpretations?
     """)
     return
 
 
 @app.cell
-def _():
-    # alt.Chart(summary_stats).mark_boxplot(extent="min-max").encode(
-    #     alt.Y("median:Q").scale(zero=False),
-    #     alt.X("locations_id:N"),
-    #     alt.Tooltip("count():Q")
-    # )
+def _(alt, summary_stats):
+    boxplot = alt.Chart(summary_stats).mark_boxplot(extent="min-max").encode(
+        alt.Y("median:Q").scale(zero=False),
+        alt.X("locations_id:N"),
+        alt.Tooltip("count():Q")
+    )
+
+    records_count = alt.Chart(summary_stats).mark_line(color="maroon").encode(
+        alt.X("locations_id:N"),
+        alt.Y("count():Q", title="days_count")
+    )
+
+    (boxplot + records_count).resolve_scale(y='independent')
     return
 
 
@@ -689,7 +741,7 @@ def _(client, pprint):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    **Quiz:** How many Measurement() objects might you find in the result of this request? How many expected_count in coverage will you see in each object?
+    **Quiz 8:** How many Measurement() objects might you find in the result of this request? How many expected_count in coverage will you see in each object?
     """)
     return
 
@@ -697,10 +749,12 @@ def _(mo):
 @app.cell
 def _(client):
     coverage_quiz = client.measurements.list(sensors_id=10330994,
-                             data="years", # data is always pre-computed and aggregated from hourly averages
+                             data="years", # note: data is always pre-computed and aggregated from hour averages
                              date_from="2025-01-01",
                              date_to="2025-12-31"
                             )
+
+    # pprint(coverage_quiz)
     return
 
 
@@ -708,8 +762,14 @@ def _(client):
 def _(mo):
     mo.md(r"""
     Additionally, you could also manually choose the data and roll them up on the fly for options unavailable at the data level or if you want a different base calculations (the default for data is hour averages). This will be slower so **only use rollup when you really need it.**
+    """)
+    return
 
-    **Quiz:** How many records might we see in the results?
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    **Quiz 9:** How many records might we see in the results?
     """)
     return
 
@@ -719,17 +779,17 @@ def _(client):
     # Fetch monthly data in 2025 computed on the fly from day averages
     monthly_measurements_2025_example = client.measurements.list(sensors_id=10330994,
                                                       data="days", # use days as base measurement data
-                                                      rollup="monthly", # and then roll up them to get monthly summaries
+                                                      rollup="monthly", # then roll them up to get monthly summaries
                                                       date_from="2025-01-01",
                                                       date_to="2025-12-31"
-                                                     )
+                                                                )
     return
 
 
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    Now, let's answer Q6-1. Since we have already created a DataFrame `summary_stats_full_2025` with days measurement data from Topic 4, let's use that data.
+    Now, let's answer **Q6-1**. Since we have already created a DataFrame `summary_stats_full_2025` with days measurement data from Topic 5, let's use that data.
     """)
     return
 
@@ -746,7 +806,15 @@ def _(summary_stats_full_2025):
 @app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
-    As we have seen in the prior charts, monitors can be spotty and these calculations so far do not take into account the coverage metric. For Q6-2., let's do these calculations again, but this time we will exclude days that do not have >= 75% coverage.
+    **Quiz 10**: Let's say you don't have the table from Topic 5. What you do have is the list of PM2.5 sensors from all Accra locations acquired earlier. How would you approach **Q6-1**? (brainstorming is fine, no need to code it out)
+    """)
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    As we have seen in the prior charts, monitors can be spotty and these calculations so far do not take into account the coverage metric. For **Q6-2**, let's do these calculations again, but this time we will exclude days that do not have >= 75% coverage.
     """)
     return
 
@@ -816,7 +884,7 @@ def _(mo):
 
 @app.cell
 def _(alt, summary_stats_full_2025):
-    q6 = summary_stats_full_2025[summary_stats_full_2025["locations_id"] == 3025582]
+    q7 = summary_stats_full_2025[summary_stats_full_2025["locations_id"] == 3025582]
 
     def label_data(row):
         if not row["coverage"]:
@@ -830,17 +898,16 @@ def _(alt, summary_stats_full_2025):
                 return "Within WHO daily AVG conc. recs"
             return "Invalid data"
 
-    q6["data_label"] = q6.apply(label_data, axis=1)
+    q7["data_label"] = q7.apply(label_data, axis=1)
 
-    q6_categories = ["No data available for this day", "Insufficient day data",
-                  "Over WHO daily AVG conc. recs",
-                  "Within WHO daily AVG conc. recs", "Invalid data"]
-    q6_color_mapping = ["#FFFFFF", "#CCCCCC", "#E65C5C", "#A1E972", "#000000"]
+    q7_categories = ["No data available for this day", "Insufficient day data", "Over WHO daily AVG conc. recs",
+                     "Within WHO daily AVG conc. recs", "Invalid data"]
+    q7_color_mapping = ["#FFFFFF", "#CCCCCC", "#E65C5C", "#A1E972", "#000000"]
 
-    alt.Chart(q6, title="Daily average of PM2.5 concentration against WHO 24-hour recommendation in 2025").mark_rect().encode(
+    alt.Chart(q7, title="Daily average of PM2.5 concentration against WHO 24-hour recommendation in 2025").mark_rect().encode(
         alt.X("date(date):O").title("Day").axis(format="%e", labelAngle=0),
         alt.Y("month(date):O").title("Month"),
-        alt.Color('data_label:N', scale=alt.Scale(domain=q6_categories, range=q6_color_mapping), title=None),
+        alt.Color('data_label:N', scale=alt.Scale(domain=q7_categories, range=q7_color_mapping), title=None),
         tooltip=["data_label", "coverage", "average"],
     ).configure_view(
         step=22,
