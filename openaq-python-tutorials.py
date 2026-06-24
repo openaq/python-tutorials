@@ -27,7 +27,7 @@ def _(mo):
     mo.md(r"""
     # **OpenAQ Python SDK tutorials**
     - **OpenAQ Python SDK version:** 1.0.3
-    - **Last updated:** 2026-06-23
+    - **Last updated:** 2026-06-24
     """)
     return
 
@@ -215,7 +215,7 @@ def _(mo):
 
     In the earlier example, we have accessed the Locations resource using a `.get()` method. Now, to answer question 1, we want to get multiple locations. To do this, we access the Locations resource again but now using the `.list()` method.
 
-    Let's learn more about this `.list()` method in our [Python documentation](https://openaq.github.io/openaq-python/).
+    Let's learn more about this `.list()` method in our [Python documentation](https://python.openaq.org//).
     """)
     return
 

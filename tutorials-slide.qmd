@@ -46,7 +46,7 @@ include-in-header:
 ## Data models {.smaller}
 ![](images/data-models.png){width="880px" height="500px"}
 
-For a full definition of each resource, visit our [Python documentation website](https://openaq.github.io/openaq-python/).
+For a full definition of each resource, visit our [Python documentation website](https://python.openaq.org/).
 
 
 ## Data models {.smaller}
@@ -54,6 +54,11 @@ For a full definition of each resource, visit our [Python documentation website]
 
 For a full definition of each resource, visit our [Python documentation website](https://openaq.github.io/openaq-python/).
 
+
+## Data models {.smaller}
+![](images/tree-structure.png){width="2000px" height="480px"}
+
+Every Location and Sensor instance gets a unique ID.
 
 # Key concepts
 
