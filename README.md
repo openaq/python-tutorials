@@ -21,7 +21,7 @@ For your reference, the notebook makes use of these packages that you'll need to
 ```
 altair==6.0.0,
 marimo>=0.19.9,
-openaq==1.0.0rc2,
+openaq==1.0.3,
 pandas==3.0.1,
 wigglystuff==0.2.34,
 vegafusion>=2.0.3,
