@@ -133,8 +133,7 @@ The tutorial is exercises-driven and works as a primer to OpenAQ Python SDK. Hav
 ---
 
 ## Useful links
-- [OpenAQ Python SDK documentation](https://openaq.github.io/openaq-python/)
+- [OpenAQ Python SDK documentation](https://python.openaq.org/)
 - [OpenAQ API documentation](https://docs.openaq.org/)
 - [OpenAQ Explorer](https://explore.openaq.org/#1.2/20/40)
 - Join [OpenAQ slack channel](https://openaq.slack.com/join/shared_invite/zt-3ga21nbn9-GIFP2NfNTdS0I9OMuKUEbw#/shared-invite/email) for questions and discussions anything air quality
-

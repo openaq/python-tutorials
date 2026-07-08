@@ -1,0 +1,67 @@
+---
+title: "OpenAQ Python Training (cont.)"
+author: "Minh Nghiem"
+format:
+    revealjs:
+        slide-number: true
+        logo: images/openaq-logo.png
+
+include-in-header:
+  - text: |
+      <style>
+      .reveal .slide-logo {
+        max-height: unset;
+        height: 200px;
+      }
+      </style>
+---
+
+## Today's agenda (session II)
+- Session I recap (15 mins)
+- OpenAQ Python SDK tutorials part II: Data evaluation & visualization (20 mins)
+- Office Hour (25 mins)
+
+---
+
+## What we learned in session I
+- API key concepts
+- Accessing the notebook
+- Instantiating a client with OpenAQ Python SDK
+- Key resources: Locations, Sensors, Measurements
+- Basic workflow: Retrieve a Location -> retrieve a Sensor -> retrieve Measurements
+
+---
+
+## Session I quizzes {.smaller}
+Access part 1 quizzes' solutions [here](https://molab.marimo.io/notebooks/nb_vdqcESRs2Ls2228intLSYp).
+
+::: aside
+Reminder to have your molab account and your OpenAQ API key if you want to run the notebook to follow along. Review the [session I slides](https://github.com/openaq/python-tutorials/blob/ambassadors/training/tutorials-slides.pdf) or preparation notes for more info.
+:::
+
+--
+
+## Tutorials (part II) {.smaller}
+**We'll work with the same note book as before.**
+
+
+**Step 1:** Go to [this link](https://molab.marimo.io/notebooks/nb_XGx4FKHVwT8EgnDFeJh9mD) to create a notebook session for this tutorials
+
+**Step 2:** Once you're in the link:
+
+- Click “Fork” at the top of the page. You will be prompted to log in to your molab account if you’re currently logged out.
+- Once you have logged in, you will be automatically redirected to your own forked version of the notebook on the web.
+- The notebook is yours to play with and will also be accessible to you via your molab homepage.
+
+::: aside
+Reminder to have your molab account and your OpenAQ API key if you want to run the notebook to follow along. Review the [session I slides](https://github.com/openaq/python-tutorials/blob/ambassadors/training/tutorials-slides.pdf) or preparation notes for more info.
+:::
+
+---
+
+## Useful links
+- [OpenAQ Python SDK documentation](https://python.openaq.org/)
+- [OpenAQ API documentation](https://docs.openaq.org/)
+- [OpenAQ Explorer](https://explore.openaq.org/#1.2/20/40)
+- Join [OpenAQ slack channel](https://openaq.slack.com/join/shared_invite/zt-3ga21nbn9-GIFP2NfNTdS0I9OMuKUEbw#/shared-invite/email) for questions and discussions anything air quality
+
